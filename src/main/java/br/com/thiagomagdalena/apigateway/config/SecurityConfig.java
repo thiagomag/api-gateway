@@ -26,7 +26,7 @@ public class SecurityConfig {
         http
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange(exchanges -> exchanges
-                        .pathMatchers("/v3/api-docs/**", "/swagger-ui/**", "/.well-known/appspecific/com.chrome.devtools.json", "/favicon.ico").permitAll()
+                        .pathMatchers("/v3/api-docs/**", "/swagger-ui/**", "/.well-known/appspecific/com.chrome.devtools.json", "/favicon.ico", "/assets/**", "/vite.svg").permitAll()
                         .pathMatchers("/nasa-backend/**", "/nasa/**").permitAll()
                         .anyExchange().authenticated()
                 )

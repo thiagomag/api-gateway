@@ -20,7 +20,11 @@ spring:
               predicates:
                 - Path=/nasa/**
               filters:
-                - RewritePath=/nasa/(?<remaining>.*), /${remaining}
+                - RewritePath=/nasa, /index.html
+            - id: nasa_frontend_assets_route
+              uri: ${NASA_FRONTEND_PATH:http://localhost:8082}
+              predicates:
+                - Path=/assets/**
 
 jwt:
   secret: 4Z^XrroxR@dWxqf$mTTKwW$!@#qGr4PT

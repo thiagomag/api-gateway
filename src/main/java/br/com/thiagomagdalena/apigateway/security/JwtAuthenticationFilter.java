@@ -107,12 +107,9 @@ public class JwtAuthenticationFilter implements WebFilter {
 
 
     private boolean isPublicRoute(String path, ServerHttpRequest request) {
-
-        if (path.startsWith("/nasa") || path.startsWith("/nasa-backend"))  {
-            return true;
-        }
-        return path.startsWith("/v3/api-docs") || path.startsWith("/swagger-ui") || path.startsWith("/api/swagger-ui.html")
-                || path.startsWith("/.well-known/appspecific/com.chrome.devtools.json") || path.startsWith("/favicon.ico");
+        return path.startsWith("/nasa") || path.startsWith("/nasa-backend/**") || path.startsWith("/v3/api-docs") || path.startsWith("/swagger-ui")
+                || path.startsWith("/api/swagger-ui.html") || path.startsWith("/.well-known/appspecific/com.chrome.devtools.json")
+                || path.startsWith("/favicon.ico") || path.startsWith("/assets/") || path.startsWith("/vite.svg");
     }
 
     @SuppressWarnings("unchecked")
