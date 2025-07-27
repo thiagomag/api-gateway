@@ -1,0 +1,11 @@
+services:
+  api-gateway:
+    container_name: api-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      NASA_BACKEND_SERVICE_PATH: nasa-api-front-vue3:80
+      NASA_FRONTEND_PATH: nasa-api-backend:8080
+
+volumes:
+  postgres_data:

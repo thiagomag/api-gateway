@@ -1,0 +1,12 @@
+services:
+  api-gateway:
+    image: thiagomag/api-gateway:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - windows-network
+
+networks:
+  windows-network:
+    external: true

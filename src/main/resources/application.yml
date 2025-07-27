@@ -1,0 +1,41 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway-fiap-service
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: nasa_backend_service_route
+              uri: ${NASA_BACKEND_SERVICE_PATH:http://localhost:8081}
+              predicates:
+                - Path=/nasa-backend/**
+              filters:
+                - RewritePath=/nasa-backend/(?<remaining>.*), /${remaining}
+            - id: nasa_frontend_route
+              uri: ${NASA_FRONTEND_PATH:http://localhost:8082}
+              predicates:
+                - Path=/nasa/**
+              filters:
+                - RewritePath=/nasa/(?<remaining>.*), /${remaining}
+
+jwt:
+  secret: 4Z^XrroxR@dWxqf$mTTKwW$!@#qGr4PT
+
+api:
+  keys:
+    validApiKeys:
+      - RXN0YSDDqSBhIGFwaS1rZXkgZG8gY2FkYXN0cm8tdXN1YXJpb3Mtc2VydmljZQ==
+      - RXN0YSDDqSBhIGFwaS1rZXkgZG8gbm90aWZpY2FjYW8tc2VydmljZQ==
+      - RXN0YSDDqSBhIGFwaS1rZXkgZG8gbWVkaWNhbWVudG9zLXNlcnZpY2U=
+      - RXN0YSDDqSBhIGFwaS1rZXkgZG8gZm9ybmVjZWRvci1zZXJ2aWNl
+
+logging:
+  level:
+    root: INFO
+    com.geradortestes.apigateway: DEBUG
+    org.springframework.cloud.gateway: DEBUG
+    io.jsonwebtoken: INFO

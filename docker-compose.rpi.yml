@@ -1,0 +1,12 @@
+services:
+  nasa-api-backend:
+    image: thiagomag/nasa-api-backend:rpi
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - rpi-network
+
+networks:
+  rpi-network:
+    external: true
