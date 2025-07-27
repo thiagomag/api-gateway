@@ -3,6 +3,7 @@ services:
     container_name: api-gateway
     ports:
       - "8080:8080"
+    restart: unless-stopped
     environment:
       NASA_BACKEND_SERVICE_PATH: http://nasa-api-backend:8080
       NASA_FRONTEND_PATH: http://nasa-api-front-vue3:80
