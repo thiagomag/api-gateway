@@ -1,6 +1,6 @@
 services:
-  nasa-api-backend:
-    image: thiagomag/nasa-api-backend:rpi
+  api-gatewa:
+    image: thiagomag/api-gatewa:rpi
     build:
       context: .
       dockerfile: Dockerfile
