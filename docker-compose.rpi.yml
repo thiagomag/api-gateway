@@ -1,6 +1,6 @@
 services:
-  api-gatewa:
-    image: thiagomag/api-gatewa:rpi
+  api-gateway:
+    image: thiagomag/api-gateway:rpi
     build:
       context: .
       dockerfile: Dockerfile
