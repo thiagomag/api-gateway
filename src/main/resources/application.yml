@@ -10,19 +10,19 @@ spring:
         webflux:
           routes:
             - id: nasa_backend_service_route
-              uri: ${NASA_BACKEND_SERVICE_PATH:http://localhost:8081}
+              uri: ${NASA_BACKEND_SERVICE_PATH}
               predicates:
                 - Path=/nasa-backend/**
               filters:
                 - RewritePath=/nasa-backend/(?<remaining>.*), /${remaining}
             - id: nasa_frontend_route
-              uri: ${NASA_FRONTEND_PATH:http://localhost:8082}
+              uri: ${NASA_FRONTEND_PATH}
               predicates:
                 - Path=/nasa/**
               filters:
                 - RewritePath=/nasa, /index.html
             - id: nasa_frontend_assets_route
-              uri: ${NASA_FRONTEND_PATH:http://localhost:8082}
+              uri: ${NASA_FRONTEND_PATH}
               predicates:
                 - Path=/assets/**
 
