@@ -107,7 +107,7 @@ public class JwtAuthenticationFilter implements WebFilter {
 
 
     private boolean isPublicRoute(String path, ServerHttpRequest request) {
-        return path.startsWith("/nasa") || path.startsWith("/nasa-backend/**") || path.startsWith("/v3/api-docs") || path.startsWith("/swagger-ui")
+        return path.startsWith("/nasa/") || path.startsWith("/nasa-backend/") || path.startsWith("/v3/api-docs") || path.startsWith("/swagger-ui")
                 || path.startsWith("/api/swagger-ui.html") || path.startsWith("/.well-known/appspecific/com.chrome.devtools.json")
                 || path.startsWith("/favicon.ico") || path.startsWith("/assets/") || path.startsWith("/vite.svg");
     }
