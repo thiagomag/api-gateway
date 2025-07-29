@@ -105,11 +105,11 @@ public class JwtAuthenticationFilter implements WebFilter {
         return getVoidMono(exchange, errorMessage, httpStatus);
     }
 
-
     private boolean isPublicRoute(String path, ServerHttpRequest request) {
-        return path.startsWith("/nasa/") || path.startsWith("/nasa-backend/") || path.startsWith("/v3/api-docs") || path.startsWith("/swagger-ui")
-                || path.startsWith("/api/swagger-ui.html") || path.startsWith("/.well-known/appspecific/com.chrome.devtools.json")
-                || path.startsWith("/favicon.ico") || path.startsWith("/assets/") || path.startsWith("/vite.svg");
+        return path.startsWith("api/nasa/") || path.startsWith("/nasa/") || path.startsWith("api/nasa-backend/") || path.startsWith("/nasa-backend/")
+                || path.startsWith("/v3/api-docs") || path.startsWith("/swagger-ui") || path.startsWith("/api/swagger-ui.html")
+                || path.startsWith("/.well-known/appspecific/com.chrome.devtools.json") || path.startsWith("/favicon.ico")
+                || path.startsWith("/assets/") || path.startsWith("/vite.svg");
     }
 
     @SuppressWarnings("unchecked")
