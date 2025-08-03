@@ -31,6 +31,12 @@ spring:
                 - Path=/auth-service/**
               filters:
                 - RewritePath=/auth-service/(?<remaining>.*), /${remaining}
+            - id: google_drive_api_service
+              uri: ${GOOGLE_DRIVE_API_SERVICE_PATH}
+              predicates:
+                - Path=/google-drive/**
+              filters:
+                - RewritePath=/google-drive/(?<remaining>.*), /${remaining}
 
 jwt:
   secret: 4Z^XrroxR@dWxqf$mTTKwW$!@#qGr4PT
