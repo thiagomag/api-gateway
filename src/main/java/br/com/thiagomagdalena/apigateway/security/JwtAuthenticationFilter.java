@@ -106,6 +106,10 @@ public class JwtAuthenticationFilter implements WebFilter {
     }
 
     private boolean isPublicRoute(String path, ServerHttpRequest request) {
+        if ((path.startsWith("/auth-service/users") || path.startsWith("/auth-service/users/login") ) && request.getMethod().matches("POST")) {
+            return true;
+        }
+
         return path.equals("/nasa") || path.startsWith("/nasa/")
                 || path.equals("/nasa-backend") || path.startsWith("/nasa-backend/")
                 || path.startsWith("/v3/api-docs") || path.startsWith("/swagger-ui")

@@ -7,6 +7,7 @@ services:
     environment:
       NASA_BACKEND_SERVICE_PATH: http://nasa-api-backend:8080
       NASA_FRONTEND_PATH: http://nasa-api-front-vue3:80
+      AUTH_SERVICE_PATH: http://auth-service:8080
 
 volumes:
   postgres_data:
