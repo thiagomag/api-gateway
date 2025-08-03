@@ -40,19 +40,19 @@ public class JwtAuthenticationFilter implements WebFilter {
 
         Boolean authenticatedByApiKey = exchange.getAttribute(ApiAuthenticationFilter.API_KEY_AUTHENTICATED_ATTRIBUTE);
         if (Boolean.TRUE.equals(authenticatedByApiKey)) {
-            log.debug("Requisição para {} já autenticada por API Key. Pulando validação JWT.", path);
+            log.info("Requisição para {} já autenticada por API Key. Pulando validação JWT.", path);
             return chain.filter(exchange);
         }
 
         if (isPublicRoute(path, request)) {
-            log.debug("Rota pública: {}. Pulando validação JWT.", path);
+            log.info("Rota pública: {}. Pulando validação JWT.", path);
             return chain.filter(exchange);
         }
 
         String authorizationHeader = request.getHeaders().getFirst(AUTHORIZATION_HEADER);
 
         if (authorizationHeader == null || !authorizationHeader.startsWith(BEARER_PREFIX)) {
-            log.warn("Token JWT ausente ou mal formatado para rota protegida: {}", path);
+            log.info("Token JWT ausente ou mal formatado para rota protegida: {}", path);
             return onError(exchange, "JWT Token is missing or malformed.", HttpStatus.UNAUTHORIZED);
         }
 
@@ -68,7 +68,7 @@ public class JwtAuthenticationFilter implements WebFilter {
             String userId = claims.getSubject();
             List<String> roles = extractRoles(claims);
 
-            log.debug("JWT valido para o User ID: '{}', Roles: '{}' no caminho: {}", userId, String.join(",", roles), path);
+            log.info("JWT valido para o User ID: '{}', Roles: '{}' no caminho: {}", userId, String.join(",", roles), path);
 
             ServerHttpRequest mutatedRequest = request.mutate()
                     .header("X-User-Id", userId)
@@ -78,25 +78,25 @@ public class JwtAuthenticationFilter implements WebFilter {
             return chain.filter(exchange.mutate().request(mutatedRequest).build());
 
         } catch (SignatureException e) {
-            log.warn("Falha na validação da assinatura JWT para o caminho '{}'. Token: {}. Erro: {}", path, truncateToken(token), e.getMessage());
+            log.info("Falha na validação da assinatura JWT para o caminho '{}'. Token: {}. Erro: {}", path, truncateToken(token), e.getMessage());
             return onError(exchange, "Assinatura JWT inválida. Autenticação falhou.", HttpStatus.UNAUTHORIZED);
         } catch (MalformedJwtException e) {
-            log.warn("JWT malformado para o caminho '{}'. Token: {}. Erro: {}", path, truncateToken(token), e.getMessage());
+            log.info("JWT malformado para o caminho '{}'. Token: {}. Erro: {}", path, truncateToken(token), e.getMessage());
             return onError(exchange, "JWT malformado. Autenticação falhou. Verifique o formato do token.", HttpStatus.BAD_REQUEST);
         } catch (ExpiredJwtException e) {
-            log.warn("JWT expirado para o caminho '{}'. Usuário: {}. Erro: {}", path, e.getClaims().getSubject(), e.getMessage());
+            log.info("JWT expirado para o caminho '{}'. Usuário: {}. Erro: {}", path, e.getClaims().getSubject(), e.getMessage());
             return onError(exchange, "O JWT expirou. Por favor, faça login novamente.", HttpStatus.UNAUTHORIZED);
         } catch (UnsupportedJwtException e) {
-            log.warn("JWT não suportado para o caminho '{}'. Token: {}. Erro: {}", path, truncateToken(token), e.getMessage());
+            log.info("JWT não suportado para o caminho '{}'. Token: {}. Erro: {}", path, truncateToken(token), e.getMessage());
             return onError(exchange, "Formato de JWT não suportado.", HttpStatus.UNAUTHORIZED);
         } catch (IllegalArgumentException e) {
-            log.warn("Argumento inválido para JWT (ex: token vazio/nulo) para o caminho '{}'. Erro: {}", path, e.getMessage());
+            log.info("Argumento inválido para JWT (ex: token vazio/nulo) para o caminho '{}'. Erro: {}", path, e.getMessage());
             return onError(exchange, "JWT é inválido ou ausente.", HttpStatus.BAD_REQUEST);
         } catch (JwtException e) { // Captura qualquer outra JwtException
-            log.error("Erro genérico no JWT para o caminho '{}'. Token: {}. Erro: {}", path, truncateToken(token), e.getMessage(), e);
+            log.info("Erro genérico no JWT para o caminho '{}'. Token: {}. Erro: {}", path, truncateToken(token), e.getMessage(), e);
             return onError(exchange, "Token JWT inválido. Autenticação falhou.", HttpStatus.UNAUTHORIZED);
         } catch (Exception e) { // Captura qualquer outra exceção inesperada
-            log.error("Erro inesperado no filtro JWT para o caminho '{}'. Erro: {}", path, e.getMessage(), e);
+            log.info("Erro inesperado no filtro JWT para o caminho '{}'. Erro: {}", path, e.getMessage(), e);
             return onError(exchange, "Ocorreu um erro inesperado durante a autenticação.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
